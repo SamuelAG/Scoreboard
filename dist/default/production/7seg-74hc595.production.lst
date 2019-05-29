@@ -1,0 +1,782 @@
+
+
+Microchip MPLAB XC8 Assembler V2.05 build -831301201 
+                                                                                               Tue May 28 22:50:01 2019
+
+Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1 
+     1                           	processor	18F45K50
+     2                           	fnconf	rparam,??,?,0
+     3                           	opt	pw 120
+     4                           	opt	flic
+     5                           	psect	idataCOMRAM,global,class=CODE,delta=1,noexec
+     6                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     7                           	psect	dataCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     8                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     9                           	psect	text0,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    14                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    15                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    16  0000                     
+    17                           ; Version 2.05
+    18                           ; Generated 20/12/2018 GMT
+    19                           ; 
+    20                           ; Copyright © 2018, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    21                           ; All rights reserved.
+    22                           ; 
+    23                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    24                           ; 
+    25                           ; Redistribution and use in source and binary forms, with or without modification, are
+    26                           ; permitted provided that the following conditions are met:
+    27                           ; 
+    28                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    29                           ;        conditions and the following disclaimer.
+    30                           ; 
+    31                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    32                           ;        of conditions and the following disclaimer in the documentation and/or other
+    33                           ;        materials provided with the distribution.
+    34                           ; 
+    35                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    36                           ;        software without specific prior written permission.
+    37                           ; 
+    38                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    39                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    40                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    41                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    42                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    43                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    44                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    45                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    46                           ; 
+    47                           ; 
+    48                           ; Code-generator required, PIC18F45K50 Definitions
+    49                           ; 
+    50                           ; SFR Addresses
+    51  0000                     
+    52                           	psect	idataCOMRAM
+    53  006176                     __pidataCOMRAM:
+    54                           	opt callstack 0
+    55                           
+    56                           ;initializer for _b7seg
+    57  006176  0077               	dw	119
+    58  006178  0014               	dw	20
+    59  00617A  00B3               	dw	179
+    60  00617C  00B6               	dw	182
+    61  00617E  00D4               	dw	212
+    62  006180  00E6               	dw	230
+    63  006182  00E7               	dw	231
+    64  006184  0034               	dw	52
+    65  006186  00F7               	dw	247
+    66  006188  00F6               	dw	246
+    67                           
+    68                           ;initializer for _byte7seg
+    69  00618A  00FC               	dw	252
+    70  00618C  0060               	dw	96
+    71  00618E  00DA               	dw	218
+    72  006190  00F2               	dw	242
+    73  006192  0066               	dw	102
+    74  006194  00B6               	dw	182
+    75  006196  00BE               	dw	190
+    76  006198  00E0               	dw	224
+    77  00619A  00FE               	dw	254
+    78  00619C  00F6               	dw	246
+    79  0000                     _TRISD	set	3989
+    80  0000                     _ADCON1	set	4033
+    81  0000                     _LATDbits	set	3980
+    82                           
+    83                           ; #config settings
+    84  0000                     
+    85                           	psect	cinit
+    86  006150                     __pcinit:
+    87                           	opt callstack 0
+    88  006150                     start_initialization:
+    89                           	opt callstack 0
+    90  006150                     __initialization:
+    91                           	opt callstack 0
+    92                           
+    93                           ; Initialize objects allocated to COMRAM (40 bytes)
+    94                           ; load TBLPTR registers with __pidataCOMRAM
+    95  006150  0E76               	movlw	low __pidataCOMRAM
+    96  006152  6EF6               	movwf	tblptrl,c
+    97  006154  0E61               	movlw	high __pidataCOMRAM
+    98  006156  6EF7               	movwf	tblptrh,c
+    99  006158  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
+   100  00615A  6EF8               	movwf	tblptru,c
+   101  00615C  EE00  F001         	lfsr	0,__pdataCOMRAM
+   102  006160  EE10 F028          	lfsr	1,40
+   103  006164                     copy_data0:
+   104  006164  0009               	tblrd		*+
+   105  006166  CFF5 FFEE          	movff	tablat,postinc0
+   106  00616A  50E5               	movf	postdec1,w,c
+   107  00616C  50E1               	movf	fsr1l,w,c
+   108  00616E  E1FA               	bnz	copy_data0
+   109  006170                     end_of_initialization:
+   110                           	opt callstack 0
+   111  006170                     __end_of__initialization:
+   112                           	opt callstack 0
+   113  006170  0100               	movlb	0
+   114  006172  EFF6  F030         	goto	_main	;jump to C main() function
+   115                           
+   116                           	psect	dataCOMRAM
+   117  000001                     __pdataCOMRAM:
+   118                           	opt callstack 0
+   119  000001                     _b7seg:
+   120                           	opt callstack 0
+   121  000001                     	ds	20
+   122  000015                     _byte7seg:
+   123                           	opt callstack 0
+   124  000015                     	ds	20
+   125                           
+   126                           	psect	cstackCOMRAM
+   127  000029                     __pcstackCOMRAM:
+   128                           	opt callstack 0
+   129  000029                     ??_key:
+   130  000029                     ??_clock:
+   131  000029                     
+   132                           ; 1 bytes @ 0x0
+   133  000029                     	ds	1
+   134  00002A                     sendData@data:
+   135                           	opt callstack 0
+   136                           
+   137                           ; 2 bytes @ 0x1
+   138  00002A                     	ds	2
+   139  00002C                     ??_sendData:
+   140                           
+   141                           ; 1 bytes @ 0x3
+   142  00002C                     	ds	3
+   143  00002F                     sendData@i:
+   144                           	opt callstack 0
+   145                           
+   146                           ; 2 bytes @ 0x6
+   147  00002F                     	ds	2
+   148  000031                     ??_main:
+   149                           
+   150                           ; 1 bytes @ 0x8
+   151  000031                     	ds	2
+   152  000033                     main@dezena:
+   153                           	opt callstack 0
+   154                           
+   155                           ; 2 bytes @ 0xA
+   156  000033                     	ds	2
+   157  000035                     main@i:
+   158                           	opt callstack 0
+   159                           
+   160                           ; 2 bytes @ 0xC
+   161  000035                     	ds	2
+   162                           
+   163 ;;
+   164 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   165 ;;
+   166 ;; *************** function _main *****************
+   167 ;; Defined at:
+   168 ;;		line 121 in file "mainfile.c"
+   169 ;; Parameters:    Size  Location     Type
+   170 ;;		None
+   171 ;; Auto vars:     Size  Location     Type
+   172 ;;  i               2   12[COMRAM] int 
+   173 ;;  dezena          2   10[COMRAM] int 
+   174 ;; Return value:  Size  Location     Type
+   175 ;;                  1    wreg      void 
+   176 ;; Registers used:
+   177 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+   178 ;; Tracked objects:
+   179 ;;		On entry : 0/0
+   180 ;;		On exit  : 0/0
+   181 ;;		Unchanged: 0/0
+   182 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   183 ;;      Params:         0       0       0       0       0       0       0       0       0
+   184 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   185 ;;      Temps:          2       0       0       0       0       0       0       0       0
+   186 ;;      Totals:         6       0       0       0       0       0       0       0       0
+   187 ;;Total ram usage:        6 bytes
+   188 ;; Hardware stack levels required when called:    2
+   189 ;; This function calls:
+   190 ;;		_key
+   191 ;;		_sendData
+   192 ;;		_setup
+   193 ;; This function is called by:
+   194 ;;		Startup code after reset
+   195 ;; This function uses a non-reentrant model
+   196 ;;
+   197                           
+   198                           	psect	text0
+   199  0061EC                     __ptext0:
+   200                           	opt callstack 0
+   201  0061EC                     _main:
+   202                           	opt callstack 29
+   203                           
+   204                           ;mainfile.c: 122:     setup();
+   205                           
+   206                           ;incstack = 0
+   207  0061EC  EC88  F030         	call	_setup	;wreg free
+   208  0061F0                     l791:
+   209                           
+   210                           ;mainfile.c: 123:     int dezena = 0;
+   211  0061F0  0E00               	movlw	0
+   212  0061F2  6E34               	movwf	main@dezena+1,c
+   213  0061F4  0E00               	movlw	0
+   214  0061F6  6E33               	movwf	main@dezena,c
+   215  0061F8                     l793:
+   216                           
+   217                           ;mainfile.c: 125:         for(int i = 0; i < 10; i++) {
+   218  0061F8  0E00               	movlw	0
+   219  0061FA  6E36               	movwf	main@i+1,c
+   220  0061FC  0E00               	movlw	0
+   221  0061FE  6E35               	movwf	main@i,c
+   222  006200                     l799:
+   223                           
+   224                           ;mainfile.c: 126:             sendData(b7seg[i]);
+   225  006200  90D8               	bcf	status,0,c
+   226  006202  3435               	rlcf	main@i,w,c
+   227  006204  6ED9               	movwf	fsr2l,c
+   228  006206  3436               	rlcf	main@i+1,w,c
+   229  006208  6EDA               	movwf	fsr2h,c
+   230  00620A  0E01               	movlw	low _b7seg
+   231  00620C  26D9               	addwf	fsr2l,f,c
+   232  00620E  0E00               	movlw	high _b7seg
+   233  006210  22DA               	addwfc	fsr2h,f,c
+   234  006212  CFDE F02A          	movff	postinc2,sendData@data
+   235  006216  CFDD F02B          	movff	postdec2,sendData@data+1
+   236  00621A  ECCF  F030         	call	_sendData	;wreg free
+   237                           
+   238                           ;mainfile.c: 127:             sendData(b7seg[dezena]);
+   239  00621E  90D8               	bcf	status,0,c
+   240  006220  3433               	rlcf	main@dezena,w,c
+   241  006222  6ED9               	movwf	fsr2l,c
+   242  006224  3434               	rlcf	main@dezena+1,w,c
+   243  006226  6EDA               	movwf	fsr2h,c
+   244  006228  0E01               	movlw	low _b7seg
+   245  00622A  26D9               	addwf	fsr2l,f,c
+   246  00622C  0E00               	movlw	high _b7seg
+   247  00622E  22DA               	addwfc	fsr2h,f,c
+   248  006230  CFDE F02A          	movff	postinc2,sendData@data
+   249  006234  CFDD F02B          	movff	postdec2,sendData@data+1
+   250  006238  ECCF  F030         	call	_sendData	;wreg free
+   251                           
+   252                           ;mainfile.c: 128:             key();
+   253  00623C  EC8D  F030         	call	_key	;wreg free
+   254                           
+   255                           ;mainfile.c: 129:             _delay((unsigned long)((200)*(48000000/4000.0)));
+   256  006240  0E0D               	movlw	13
+   257  006242  6E32               	movwf	(??_main+1)& (0+255),c
+   258  006244  0E2D               	movlw	45
+   259  006246  6E31               	movwf	??_main& (0+255),c
+   260  006248  0ED8               	movlw	216
+   261  00624A                     u97:
+   262  00624A  2EE8               	decfsz	wreg,f,c
+   263  00624C  D7FE               	bra	u97
+   264  00624E  2E31               	decfsz	??_main& (0+255),f,c
+   265  006250  D7FC               	bra	u97
+   266  006252  2E32               	decfsz	(??_main+1)& (0+255),f,c
+   267  006254  D7FA               	bra	u97
+   268                           
+   269                           ;mainfile.c: 131:         }
+   270  006256  4A35               	infsnz	main@i,f,c
+   271  006258  2A36               	incf	main@i+1,f,c
+   272  00625A  BE36               	btfsc	main@i+1,7,c
+   273  00625C  D7D1               	goto	l799
+   274  00625E  5036               	movf	main@i+1,w,c
+   275  006260  E104               	bnz	u70
+   276  006262  0E0A               	movlw	10
+   277  006264  5C35               	subwf	main@i,w,c
+   278  006266  A0D8               	btfss	status,0,c
+   279  006268  D7CB               	goto	l799
+   280  00626A                     u70:
+   281                           
+   282                           ;mainfile.c: 132:         dezena++;
+   283  00626A  4A33               	infsnz	main@dezena,f,c
+   284  00626C  2A34               	incf	main@dezena+1,f,c
+   285                           
+   286                           ;mainfile.c: 133:         if(dezena > 9) {
+   287  00626E  BE34               	btfsc	main@dezena+1,7,c
+   288  006270  D7C3               	goto	l793
+   289  006272  5034               	movf	main@dezena+1,w,c
+   290  006274  E1BD               	bnz	l791
+   291  006276  0E0A               	movlw	10
+   292  006278  5C33               	subwf	main@dezena,w,c
+   293  00627A  B0D8               	btfsc	status,0,c
+   294  00627C  D7B9               	goto	l791
+   295  00627E  D7BC               	goto	l793
+   296  006280                     __end_of_main:
+   297                           	opt callstack 0
+   298                           
+   299 ;; *************** function _setup *****************
+   300 ;; Defined at:
+   301 ;;		line 160 in file "mainfile.c"
+   302 ;; Parameters:    Size  Location     Type
+   303 ;;		None
+   304 ;; Auto vars:     Size  Location     Type
+   305 ;;		None
+   306 ;; Return value:  Size  Location     Type
+   307 ;;                  1    wreg      void 
+   308 ;; Registers used:
+   309 ;;		wreg, status,2
+   310 ;; Tracked objects:
+   311 ;;		On entry : 0/0
+   312 ;;		On exit  : 0/0
+   313 ;;		Unchanged: 0/0
+   314 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   315 ;;      Params:         0       0       0       0       0       0       0       0       0
+   316 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   317 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   318 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   319 ;;Total ram usage:        0 bytes
+   320 ;; Hardware stack levels used:    1
+   321 ;; This function calls:
+   322 ;;		Nothing
+   323 ;; This function is called by:
+   324 ;;		_main
+   325 ;; This function uses a non-reentrant model
+   326 ;;
+   327                           
+   328                           	psect	text1
+   329  006110                     __ptext1:
+   330                           	opt callstack 0
+   331  006110                     _setup:
+   332                           	opt callstack 30
+   333                           
+   334                           ;mainfile.c: 161:     ADCON1 = 0x0F;
+   335                           
+   336                           ;incstack = 0
+   337  006110  0E0F               	movlw	15
+   338  006112  6EC1               	movwf	4033,c	;volatile
+   339                           
+   340                           ;mainfile.c: 162:     TRISD = 0b00000000;
+   341  006114  0E00               	movlw	0
+   342  006116  6E95               	movwf	3989,c	;volatile
+   343  006118  0012               	return		;funcret
+   344  00611A                     __end_of_setup:
+   345                           	opt callstack 0
+   346                           
+   347 ;; *************** function _sendData *****************
+   348 ;; Defined at:
+   349 ;;		line 140 in file "mainfile.c"
+   350 ;; Parameters:    Size  Location     Type
+   351 ;;  data            2    1[COMRAM] int 
+   352 ;; Auto vars:     Size  Location     Type
+   353 ;;  i               2    6[COMRAM] int 
+   354 ;; Return value:  Size  Location     Type
+   355 ;;                  1    wreg      void 
+   356 ;; Registers used:
+   357 ;;		wreg, status,2, status,0, cstack
+   358 ;; Tracked objects:
+   359 ;;		On entry : 0/0
+   360 ;;		On exit  : 0/0
+   361 ;;		Unchanged: 0/0
+   362 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   363 ;;      Params:         2       0       0       0       0       0       0       0       0
+   364 ;;      Locals:         2       0       0       0       0       0       0       0       0
+   365 ;;      Temps:          3       0       0       0       0       0       0       0       0
+   366 ;;      Totals:         7       0       0       0       0       0       0       0       0
+   367 ;;Total ram usage:        7 bytes
+   368 ;; Hardware stack levels used:    1
+   369 ;; Hardware stack levels required when called:    1
+   370 ;; This function calls:
+   371 ;;		_clock
+   372 ;; This function is called by:
+   373 ;;		_main
+   374 ;; This function uses a non-reentrant model
+   375 ;;
+   376                           
+   377                           	psect	text2
+   378  00619E                     __ptext2:
+   379                           	opt callstack 0
+   380  00619E                     _sendData:
+   381                           	opt callstack 29
+   382                           
+   383                           ;mainfile.c: 141:     for(int i = 0; i < 8; i++) {
+   384                           
+   385                           ;incstack = 0
+   386  00619E  0E00               	movlw	0
+   387  0061A0  6E30               	movwf	sendData@i+1,c
+   388  0061A2  0E00               	movlw	0
+   389  0061A4  6E2F               	movwf	sendData@i,c
+   390  0061A6                     l781:
+   391                           
+   392                           ;mainfile.c: 142:         LATDbits.LATD1 = (data >> i) & 0x01;
+   393  0061A6  C02F  F02C         	movff	sendData@i,??_sendData
+   394  0061AA  C02A  F02D         	movff	sendData@data,??_sendData+1
+   395  0061AE  C02B  F02E         	movff	sendData@data+1,??_sendData+2
+   396  0061B2  2A2C               	incf	??_sendData,f,c
+   397  0061B4  D003               	goto	u54
+   398  0061B6                     u55:
+   399  0061B6  342E               	rlcf	??_sendData+2,w,c
+   400  0061B8  322E               	rrcf	??_sendData+2,f,c
+   401  0061BA  322D               	rrcf	??_sendData+1,f,c
+   402  0061BC                     u54:
+   403  0061BC  2E2C               	decfsz	??_sendData,f,c
+   404  0061BE  D7FB               	goto	u55
+   405  0061C0  0E01               	movlw	1
+   406  0061C2  162D               	andwf	??_sendData+1,f,c
+   407  0061C4  462D               	rlncf	??_sendData+1,f,c
+   408  0061C6  508C               	movf	3980,w,c	;volatile
+   409  0061C8  182D               	xorwf	??_sendData+1,w,c
+   410  0061CA  0BFD               	andlw	-3
+   411  0061CC  182D               	xorwf	??_sendData+1,w,c
+   412  0061CE  6E8C               	movwf	3980,c	;volatile
+   413                           
+   414                           ;mainfile.c: 143:         clock();
+   415  0061D0  EC97  F030         	call	_clock	;wreg free
+   416                           
+   417                           ;mainfile.c: 144:     }
+   418  0061D4  4A2F               	infsnz	sendData@i,f,c
+   419  0061D6  2A30               	incf	sendData@i+1,f,c
+   420  0061D8  BE30               	btfsc	sendData@i+1,7,c
+   421  0061DA  D7E5               	goto	l781
+   422  0061DC  5030               	movf	sendData@i+1,w,c
+   423  0061DE  E105               	bnz	u60
+   424  0061E0  0E08               	movlw	8
+   425  0061E2  5C2F               	subwf	sendData@i,w,c
+   426  0061E4  B0D8               	btfsc	status,0,c
+   427  0061E6  0012               	return	
+   428  0061E8  D7DE               	goto	l781
+   429  0061EA                     u60:
+   430  0061EA  0012               	return		;funcret
+   431  0061EC                     __end_of_sendData:
+   432                           	opt callstack 0
+   433                           
+   434 ;; *************** function _clock *****************
+   435 ;; Defined at:
+   436 ;;		line 147 in file "mainfile.c"
+   437 ;; Parameters:    Size  Location     Type
+   438 ;;		None
+   439 ;; Auto vars:     Size  Location     Type
+   440 ;;		None
+   441 ;; Return value:  Size  Location     Type
+   442 ;;                  1    wreg      void 
+   443 ;; Registers used:
+   444 ;;		wreg
+   445 ;; Tracked objects:
+   446 ;;		On entry : 0/0
+   447 ;;		On exit  : 0/0
+   448 ;;		Unchanged: 0/0
+   449 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   450 ;;      Params:         0       0       0       0       0       0       0       0       0
+   451 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   452 ;;      Temps:          1       0       0       0       0       0       0       0       0
+   453 ;;      Totals:         1       0       0       0       0       0       0       0       0
+   454 ;;Total ram usage:        1 bytes
+   455 ;; Hardware stack levels used:    1
+   456 ;; This function calls:
+   457 ;;		Nothing
+   458 ;; This function is called by:
+   459 ;;		_sendData
+   460 ;; This function uses a non-reentrant model
+   461 ;;
+   462                           
+   463                           	psect	text3
+   464  00612E                     __ptext3:
+   465                           	opt callstack 0
+   466  00612E                     _clock:
+   467                           	opt callstack 29
+   468                           
+   469                           ;mainfile.c: 148:     LATDbits.LATD0 = 1;
+   470                           
+   471                           ;incstack = 0
+   472  00612E  808C               	bsf	3980,0,c	;volatile
+   473                           
+   474                           ;mainfile.c: 149:     _delay((unsigned long)((500)*(48000000/4000000.0)));
+   475  006130  0E08               	movlw	8
+   476  006132  6E29               	movwf	??_clock& (0+255),c
+   477  006134  0ECA               	movlw	202
+   478  006136                     u107:
+   479  006136  2EE8               	decfsz	wreg,f,c
+   480  006138  D7FE               	bra	u107
+   481  00613A  2E29               	decfsz	??_clock& (0+255),f,c
+   482  00613C  D7FC               	bra	u107
+   483                           
+   484                           ;mainfile.c: 150:     LATDbits.LATD0 = 0;
+   485  00613E  908C               	bcf	3980,0,c	;volatile
+   486                           
+   487                           ;mainfile.c: 151:     _delay((unsigned long)((500)*(48000000/4000000.0)));
+   488  006140  0E08               	movlw	8
+   489  006142  6E29               	movwf	??_clock& (0+255),c
+   490  006144  0ECA               	movlw	202
+   491  006146                     u117:
+   492  006146  2EE8               	decfsz	wreg,f,c
+   493  006148  D7FE               	bra	u117
+   494  00614A  2E29               	decfsz	??_clock& (0+255),f,c
+   495  00614C  D7FC               	bra	u117
+   496  00614E  0012               	return		;funcret
+   497  006150                     __end_of_clock:
+   498                           	opt callstack 0
+   499                           
+   500 ;; *************** function _key *****************
+   501 ;; Defined at:
+   502 ;;		line 154 in file "mainfile.c"
+   503 ;; Parameters:    Size  Location     Type
+   504 ;;		None
+   505 ;; Auto vars:     Size  Location     Type
+   506 ;;		None
+   507 ;; Return value:  Size  Location     Type
+   508 ;;                  1    wreg      void 
+   509 ;; Registers used:
+   510 ;;		wreg
+   511 ;; Tracked objects:
+   512 ;;		On entry : 0/0
+   513 ;;		On exit  : 0/0
+   514 ;;		Unchanged: 0/0
+   515 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   516 ;;      Params:         0       0       0       0       0       0       0       0       0
+   517 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   518 ;;      Temps:          1       0       0       0       0       0       0       0       0
+   519 ;;      Totals:         1       0       0       0       0       0       0       0       0
+   520 ;;Total ram usage:        1 bytes
+   521 ;; Hardware stack levels used:    1
+   522 ;; This function calls:
+   523 ;;		Nothing
+   524 ;; This function is called by:
+   525 ;;		_main
+   526 ;; This function uses a non-reentrant model
+   527 ;;
+   528                           
+   529                           	psect	text4
+   530  00611A                     __ptext4:
+   531                           	opt callstack 0
+   532  00611A                     _key:
+   533                           	opt callstack 30
+   534                           
+   535                           ;mainfile.c: 155:     LATDbits.LATD2 = 1;
+   536                           
+   537                           ;incstack = 0
+   538  00611A  848C               	bsf	3980,2,c	;volatile
+   539                           
+   540                           ;mainfile.c: 156:     _delay((unsigned long)((500)*(48000000/4000000.0)));
+   541  00611C  0E08               	movlw	8
+   542  00611E  6E29               	movwf	??_key& (0+255),c
+   543  006120  0ECA               	movlw	202
+   544  006122                     u127:
+   545  006122  2EE8               	decfsz	wreg,f,c
+   546  006124  D7FE               	bra	u127
+   547  006126  2E29               	decfsz	??_key& (0+255),f,c
+   548  006128  D7FC               	bra	u127
+   549                           
+   550                           ;mainfile.c: 157:     LATDbits.LATD2 = 0;
+   551  00612A  948C               	bcf	3980,2,c	;volatile
+   552  00612C  0012               	return		;funcret
+   553  00612E                     __end_of_key:
+   554                           	opt callstack 0
+   555  0000                     
+   556                           	psect	rparam
+   557  0000                     tosu	equ	0xFFF
+   558                           tosh	equ	0xFFE
+   559                           tosl	equ	0xFFD
+   560                           stkptr	equ	0xFFC
+   561                           pclatu	equ	0xFFB
+   562                           pclath	equ	0xFFA
+   563                           pcl	equ	0xFF9
+   564                           tblptru	equ	0xFF8
+   565                           tblptrh	equ	0xFF7
+   566                           tblptrl	equ	0xFF6
+   567                           tablat	equ	0xFF5
+   568                           prodh	equ	0xFF4
+   569                           prodl	equ	0xFF3
+   570                           indf0	equ	0xFEF
+   571                           postinc0	equ	0xFEE
+   572                           postdec0	equ	0xFED
+   573                           preinc0	equ	0xFEC
+   574                           plusw0	equ	0xFEB
+   575                           fsr0h	equ	0xFEA
+   576                           fsr0l	equ	0xFE9
+   577                           wreg	equ	0xFE8
+   578                           indf1	equ	0xFE7
+   579                           postinc1	equ	0xFE6
+   580                           postdec1	equ	0xFE5
+   581                           preinc1	equ	0xFE4
+   582                           plusw1	equ	0xFE3
+   583                           fsr1h	equ	0xFE2
+   584                           fsr1l	equ	0xFE1
+   585                           bsr	equ	0xFE0
+   586                           indf2	equ	0xFDF
+   587                           postinc2	equ	0xFDE
+   588                           postdec2	equ	0xFDD
+   589                           preinc2	equ	0xFDC
+   590                           plusw2	equ	0xFDB
+   591                           fsr2h	equ	0xFDA
+   592                           fsr2l	equ	0xFD9
+   593                           status	equ	0xFD8
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        40
+    BSS         0
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           95     14      54
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    _main->_sendData
+    _sendData->_clock
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 6     6      0     357
+                                              8 COMRAM     6     6      0
+                                _key
+                           _sendData
+                              _setup
+ ---------------------------------------------------------------------------------
+ (1) _setup                                                0     0      0       0
+ ---------------------------------------------------------------------------------
+ (1) _sendData                                             7     5      2     242
+                                              1 COMRAM     7     5      2
+                              _clock
+ ---------------------------------------------------------------------------------
+ (2) _clock                                                1     1      0       0
+                                              0 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ (1) _key                                                  1     1      0       0
+                                              0 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _key
+   _sendData
+     _clock
+   _setup
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             7FF      0       0      21        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK7           100      0       0      19        0.0%
+BANK7              100      0       0      20        0.0%
+BITBANK6           100      0       0      17        0.0%
+BANK6              100      0       0      18        0.0%
+BITBANK5           100      0       0      15        0.0%
+BANK5              100      0       0      16        0.0%
+BITBANK4           100      0       0      13        0.0%
+BANK4              100      0       0      14        0.0%
+BITBANK3           100      0       0      11        0.0%
+BANK3              100      0       0      12        0.0%
+BITBANK2           100      0       0       9        0.0%
+BANK2              100      0       0      10        0.0%
+BITBANK1           100      0       0       7        0.0%
+BANK1              100      0       0       8        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITCOMRAM           5F      0       0       0        0.0%
+COMRAM              5F      E      36       1       56.8%
+BITSFR_1             0      0       0     200        0.0%
+SFR_1                0      0       0     200        0.0%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      36       6        0.0%
+DATA                 0      0      36       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
+Symbol Table                                                                                   Tue May 28 22:50:01 2019
+
+                     u60 61EA                       u54 61BC                       u70 626A  
+                     u55 61B6                       u97 624A             __CFG_CP0$OFF 000000  
+           __CFG_CP1$OFF 000000             __CFG_CP2$OFF 000000             __CFG_CP3$OFF 000000  
+            __CFG_LVP$ON 000000                      l781 61A6                      l791 61F0  
+                    l793 61F8                      l799 6200             __CFG_CPB$OFF 000000  
+                    u107 6136                      u117 6146                      u127 6122  
+           __CFG_CPD$OFF 000000                      _key 611A                      wreg 000FE8  
+                   ?_key 0029                     _main 61EC                     fsr2h 000FDA  
+                   fsr1l 000FE1                     fsr2l 000FD9            __CFG_BORV$190 000000  
+                   start 0000            __CFG_IESO$OFF 000000            __CFG_MCLRE$ON 000000  
+           ___param_bank 000000                    ??_key 0029                    ?_main 0029  
+          __CFG_WDTEN$ON 000000                    _TRISD 000F95            __CFG_WRT0$OFF 000000  
+          __CFG_WRT1$OFF 000000            __CFG_WRT2$OFF 000000            __CFG_WRT3$OFF 000000  
+                  _b7seg 0001           __CFG_EBTR0$OFF 000000           __CFG_FCMEN$OFF 000000  
+         __CFG_EBTR1$OFF 000000           __CFG_EBTR2$OFF 000000           __CFG_EBTR3$OFF 000000  
+          __CFG_WRTB$OFF 000000            __CFG_WRTC$OFF 000000            __CFG_WRTD$OFF 000000  
+         __CFG_EBTRB$OFF 000000                    _clock 612E                    _setup 6110  
+                  main@i 0035                    tablat 000FF5                    status 000FD8  
+         __CFG_T3CMX$RC0 000000           __CFG_ICPRT$OFF 000000           __CFG_PBADEN$ON 000000  
+        __initialization 6150             __end_of_main 6280           __CFG_PCLKEN$ON 000000  
+                 ??_main 0031            __activetblptr 000000           __CFG_SDOMX$RB3 000000  
+        __CFG_CCP2MX$RC1 000000                   ?_clock 0029                   _ADCON1 000FC1  
+                 ?_setup 0029           __CFG_XINST$OFF 000000           __CFG_STVREN$ON 000000  
+       __end_of_sendData 61EC             __pdataCOMRAM 0001                   tblptrh 000FF7  
+                 tblptrl 000FF6                   tblptru 000FF8          __CFG_FOSC$ECHIO 000000  
+   __CFG_LS48MHZ$SYS24X4 000000               __accesstop 0060  __end_of__initialization 6170  
+          ___rparam_used 000001           __pcstackCOMRAM 0029         __CFG_nPWRTEN$OFF 000000  
+          __end_of_clock 6150            __end_of_setup 611A                  ??_clock 0029  
+                ??_setup 0029        __CFG_PLLSEL$PLL4X 000000                ?_sendData 002A  
+                __Hparam 0000                  __Lparam 0000                  __pcinit 6150  
+                __ramtop 0800                  __ptext0 61EC                  __ptext1 6110  
+                __ptext2 619E                  __ptext3 612E                  __ptext4 611A  
+           __size_of_key 0014     end_of_initialization 6170               ??_sendData 002C  
+                postdec1 000FE5                  postdec2 000FDD                  postinc0 000FEE  
+                postinc2 000FDE               main@dezena 0033            __pidataCOMRAM 6176  
+    start_initialization 6150              __end_of_key 612E          __CFG_nLPBOR$OFF 000000  
+           sendData@data 002A        __size_of_sendData 004E           __size_of_clock 0022  
+         __size_of_setup 000A                 _LATDbits 000F8C         __CFG_WDTPS$32768 000000  
+      __CFG_CFGPLLEN$OFF 000000                copy_data0 6164                 __Hrparam 0000  
+               __Lrparam 0000       __CFG_BOREN$SBORDIS 000000                sendData@i 002F  
+               _byte7seg 0015            __size_of_main 0094                 _sendData 619E  
+   __CFG_CPUDIV$NOCLKDIV 000000  
